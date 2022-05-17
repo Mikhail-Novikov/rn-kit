@@ -1,0 +1,105 @@
+{
+  "parser": "@typescript-eslint/parser",
+
+  "parserOptions": {
+    "ecmaFeatures.jsx": true,
+    "useJSXTextNode": false,
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./"
+  },
+
+  "rules": {
+    // Обязательные дефолтные пропсы нам не нужны, если параметр обязателен, это будет указано в типах.
+    "react/require-default-props": 0,
+    "react/jsx-one-expression-per-line": "off",
+
+    "react/jsx-props-no-spreading": "off",
+    "react-native/no-inline-styles": "off",
+
+    // Не используем дефолтный экспорт, это приводит к путанице в именах компонентов.
+    "import/prefer-default-export": "off",
+
+    "object-curly-newline": "off",
+    "operator-linebreak": "off",
+
+    // accessibility не поддерживается
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "implicit-arrow-linebreak": "off",
+    "@typescript-eslint/camelcase": "off",
+    "import/no-cycle": "off",
+    // Отключаем правило проверки передаваемых типов.
+    "react/prop-types": 0,
+    // используем запятую в качестве разделителя для interface
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "comma",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "comma",
+          "requireLast": false
+        }
+      }
+    ],
+    // указываем возвращаемый тип функции
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      { "allowExpressions": true, "allowTypedFunctionExpressions": true }
+    ],
+    "@typescript-eslint/indent": "off",
+
+    // пустые интерфейсы для примеров
+    "@typescript-eslint/no-empty-interface": "off",
+
+    // используем _ для примеров - _onClick
+    "no-underscore-dangle": "off",
+
+    // разрешить использование утверждения типа, когда литерал объекта используется в качестве аргумента
+    "@typescript-eslint/no-object-literal-type-assertion": "off"
+  },
+
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks",
+    "import",
+    "prettier"
+  ],
+
+  "extends": [
+    "prettier",
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended"
+  ],
+
+  "env": {
+    "browser": true
+  },
+
+  "globals": {
+    "it": false,
+    "expect": false,
+    "describe": false
+  },
+
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/extensions": [".ts", ".tsx", ".js", ".jsx"],
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx", ".js", ".jsx"]
+      }
+    }
+  }
+}
