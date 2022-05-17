@@ -32,12 +32,28 @@ export const ChipsGroup = (): React.ReactElement | null => {
       isFilter: true,
       checked: true,
       inner: [
-        { key: 5, label: 'Chips name 5' },
-        { key: 6, label: 'Chips name 6' },
+        { key: 5, label: 'Chips name 6' },
+        { key: 6, label: 'Chips name 7' },
       ],
     },
     { key: 3, label: 'Chips name 4', isFilter: true },
     { key: 4, label: 'Chips name 5' },
+  ]);
+
+  const [chipData2, setChipData2] = React.useState([
+    { key: 0, label: 'Chips name 10', checked: true },
+    { key: 1, label: 'Chips name 20' },
+    { key: 2,
+      label: 'Chips name 30',
+      isFilter: true,
+      checked: true,
+      inner: [
+        { key: 5, label: 'Chips name 50' },
+        { key: 6, label: 'Chips name 60' },
+      ],
+    },
+    { key: 3, label: 'Chips name 40', isFilter: true },
+    { key: 4, label: 'Chips name 50' },
   ]);
 
   return (
@@ -51,7 +67,9 @@ export const ChipsGroup = (): React.ReactElement | null => {
                 isFilter={data.isFilter}
                 checked={data.checked}
                 setIsOpenPuller={setIsOpenPuller}
-                id={data.key}
+                data={data}
+                setChipData={setChipData}
+                chipData2={chipData2}
               />
             </View>
           ))}
@@ -69,7 +87,9 @@ export const ChipsGroup = (): React.ReactElement | null => {
                   isFilter={data.isFilter}
                   checked={data.checked}
                   setIsOpenPuller={setIsOpenPuller}
-                  id={data.key}
+                  data={data}
+                  setChipData={setChipData}
+                  chipData2={chipData2}
                   inner
                 />
               </View>

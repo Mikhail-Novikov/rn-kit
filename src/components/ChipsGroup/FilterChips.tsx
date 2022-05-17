@@ -11,8 +11,6 @@ import * as sizes from './sizes';
 
 interface ChipsProps {
 
-  id: number,
-
   text?: string,
 
   checked?: boolean,
@@ -32,6 +30,12 @@ interface ChipsProps {
   setIsReset?: Function,
 
   inner?: boolean,
+
+  data?: any,
+
+  setChipData: Function,
+
+  chipData2?: any,
 
 }
 
@@ -71,12 +75,31 @@ const RenderContent = (props: ChipsProps): React.ReactElement => {
 };
 
 export const FilterChips = (props: ChipsProps): React.ReactElement => {
-  const { isFilter, text, checked, setIsOpenPuller, inner } = props;
+  const { isFilter, text, checked, setIsOpenPuller, inner, data, setChipData } = props;
   const [isReset, setIsReset] = React.useState<boolean | undefined>(false);
   const [isSelect, setIsSelect] = React.useState<boolean | undefined>(false);
+  const [chipsParent, getChipsParent] = React.useState();
+
+  const getIdParentChips = (): void => {
+    setIsOpenPuller(true);
+    getChipsParent(data);
+    const memoizedValue = React.useMemo(() => data, []);
+    console.log('🚀 ~ file: FilterChips.tsx ~ line 101 ~ data', data);
+  };
+
+  const handleChangeTitleChips = (chipsParent): void => {
+    setIsReset(true);
+
+    Object.assign(chipsParent, {
+      label: data.label,
+    });
+  };
+
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 97 ~ handleChangeTitleChips ~ chipsParent', memoizedValue);
 
   return isFilter || inner ? (
-    <TouchableOpacity onPress={() => (!inner ? setIsOpenPuller(true) : setIsReset(true))}>
+    <TouchableOpacity onPress={event => (!inner ? getIdParentChips() : handleChangeTitleChips(chipsParent))}>
+
       <View
         style={[
           styles.chipsContainer,
