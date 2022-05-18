@@ -35,7 +35,11 @@ interface ChipsProps {
 
   setChipData: Function,
 
-  chipData2?: any,
+  chipData?: [],
+
+  chipsParent?: any,
+
+  getChipsParent: Function,
 
 }
 
@@ -74,31 +78,34 @@ const RenderContent = (props: ChipsProps): React.ReactElement => {
   );
 };
 
-export const FilterChips = (props: ChipsProps): React.ReactElement => {
-  const { isFilter, text, checked, setIsOpenPuller, inner, data, setChipData } = props;
+
+const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
+  const { isFilter, text, checked, setIsOpenPuller, inner, data, chipsParent, getChipsParent, chipData, setChipData } = props;
   const [isReset, setIsReset] = React.useState<boolean | undefined>(false);
   const [isSelect, setIsSelect] = React.useState<boolean | undefined>(false);
-  const [chipsParent, getChipsParent] = React.useState();
 
-  const getIdParentChips = (): void => {
+  const getIdParentChips = (data): any => {
     setIsOpenPuller(true);
-    getChipsParent(data);
-    const memoizedValue = React.useMemo(() => data, []);
-    console.log('🚀 ~ file: FilterChips.tsx ~ line 101 ~ data', data);
+    getChipsParent({ ...chipsParent, label: data.label });
+
+    return data;
   };
 
-  const handleChangeTitleChips = (chipsParent): void => {
+  const handleChangeTitleChips = (): void => {
     setIsReset(true);
+    if (chipsParent !== null && chipsParent !== undefined) {
+      Object.assign(chipsParent, {
+        label: data.label,
+      });
+    }
 
-    Object.assign(chipsParent, {
-      label: data.label,
-    });
+    // setChipData(chipsParent.label);
   };
-
-  console.log('🚀 ~ file: FilterChips.tsx ~ line 97 ~ handleChangeTitleChips ~ chipsParent', memoizedValue);
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 103 ~ data', data);
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 99 ~ chipsParent', chipsParent);
 
   return isFilter || inner ? (
-    <TouchableOpacity onPress={event => (!inner ? getIdParentChips() : handleChangeTitleChips(chipsParent))}>
+    <TouchableOpacity onPress={event => (!inner ? getIdParentChips(data) : handleChangeTitleChips())}>
 
       <View
         style={[
@@ -138,4 +145,20 @@ export const FilterChips = (props: ChipsProps): React.ReactElement => {
   );
 };
 
-Object.assign(FilterChips, sizes);
+export const FilterChips = ({ chipData }: {chipData: ChipsProps}): React.ReactElement => (
+  chipData.map((data: any): React.ReactElement => (
+    <View key={data.key}>
+      <FilterChipsItem
+        text={data.label}
+        isFilter={data.isFilter}
+        checked={data.checked}
+        setIsOpenPuller={data.setIsOpenPuller}
+        data={data}
+        chipData={data.chipData}
+        setChipData={data.setChipData}
+        chipsParent={data.chipsParent}
+        getChipsParent={data.getChipsParent}
+        inner
+      />
+    </View>
+  )));
