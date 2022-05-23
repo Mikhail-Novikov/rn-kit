@@ -78,7 +78,8 @@ const RenderContent = (props: ChipsProps): React.ReactElement => {
 
 
 const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
-  const { isFilter, text, checked, setIsOpenPuller, isInnerChips, data, setParentChips } = props;
+  const { isFilter, text, checked, setIsOpenPuller, isInnerChips, data, setParentChips, chipsData } = props;
+  console.log("🚀 ~ file: FilterChips.tsx ~ line 82 ~ chipsData", chipsData)
   const [isReset, setIsReset] = React.useState<boolean | undefined>(false);
   const [isSelect, setIsSelect] = React.useState<boolean | undefined>(false);
 
@@ -156,18 +157,18 @@ export const FilterChips = (
 
   const [parentChips, setParentChips] = React.useState(chipsData);
 
-  const innerChips = chipsData.reduce((chips: any, el: any) => {
+  const innerChips = chipsData.reduce((chips: any, el: any): [] => {
     const _chips = chips;
     _chips[el.actions] = el.inner;
     return _chips;
   });
 
   const actionsKey = innerChips?.open?.find(key => key.actions === 'change');
-  console.log('🚀 ~ file: FilterChips.tsx ~ line 164 ~ actionsKey', actionsKey);
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 166 ~ actionsKey', actionsKey);
 
   const chipsDataFilter = isInnerChips ? innerChips.open : chipsData;
-  console.log('🚀 ~ file: FilterChips.tsx ~ line 164 ~ innerChips.open', innerChips.open);
-  console.log('🚀 ~ file: FilterChips.tsx ~ line 161 ~ chipsData', chipsData);
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 169 ~ innerChips.open', innerChips.open);
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 170 ~ chipsData', chipsData);
 
   return (
     chipsDataFilter?.map((data: any): React.ReactElement => (
