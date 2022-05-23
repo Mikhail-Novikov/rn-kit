@@ -91,10 +91,11 @@ const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
     //     label: data.label,
     //   });
     // }
-    Object.assign(data, {
+    chipsData?.map((data: any): void => (
+      data.inner?.map((chipsInnerItem: any): React.ReactNode => delete chipsInnerItem.actions)
+    ))
 
-      actions: 'change',
-    });
+    Object.assign(data, { actions: 'change' });
   };
 
   console.log('🚀 ~ file: FilterChips.tsx ~ line 98 ~ handleChangeTitleChips ~ data', data);
@@ -164,11 +165,21 @@ export const FilterChips = (
   });
 
   const actionsKey = innerChips?.open?.find(key => key.actions === 'change');
-  console.log('🚀 ~ file: FilterChips.tsx ~ line 166 ~ actionsKey', actionsKey);
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 166 ~ actionsKey', actionsKey?.label);
 
   const chipsDataFilter = isInnerChips ? innerChips.open : chipsData;
   console.log('🚀 ~ file: FilterChips.tsx ~ line 169 ~ innerChips.open', innerChips.open);
   console.log('🚀 ~ file: FilterChips.tsx ~ line 170 ~ chipsData', chipsData);
+
+  React.useEffect(() => {
+    chipsData?.map((data: any) => {
+      if(data.actions === 'open') {
+        Object.assign(data, {
+          label: actionsKey?.label,
+        });
+      }
+    });
+  },[actionsKey?.label])
 
   return (
     chipsDataFilter?.map((data: any): React.ReactElement => (
