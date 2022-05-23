@@ -26,7 +26,7 @@ export const ChipsGroup = (): React.ReactElement | null => {
   const [isOpenPuller, setIsOpenPuller] = React.useState<boolean>(false);
   const [chipsParent, getChipsParent] = React.useState({ label: '' });
 
-  const [chipData, setChipData] = React.useState([
+  const [chipsData, setChipsData] = React.useState([
     { key: 0, label: 'Chips name 1', checked: true },
     { key: 1, label: 'Chips name 2' },
     { key: 2,
@@ -38,7 +38,7 @@ export const ChipsGroup = (): React.ReactElement | null => {
         { key: 6, label: 'Chips name 7' },
       ],
     },
-    { key: 3, label: 'Chips name 4', isFilter: true },
+    { key: 3, label: 'Chips name 4' },
     { key: 4, label: 'Chips name 5' },
   ]);
 
@@ -62,7 +62,9 @@ export const ChipsGroup = (): React.ReactElement | null => {
     <>
       <ScrollView style={styles.container} horizontal>
         <FilterChips
-          chipData={chipData}
+          chipsData={chipsData}
+          setChipsData={setChipsData}
+          setIsOpenPuller={setIsOpenPuller}
         />
 
         <DotChips isOpenPanel={isOpenPuller} setIsOpenPanel={setIsOpenPuller} />
@@ -72,7 +74,10 @@ export const ChipsGroup = (): React.ReactElement | null => {
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
 
           <FilterChips
-            chipData={chipData}
+            chipsData={chipsData}
+            setChipsData={setChipsData}
+            setIsOpenPuller={setIsOpenPuller}
+            isInnerChips
           />
         </View>
       </Puller>

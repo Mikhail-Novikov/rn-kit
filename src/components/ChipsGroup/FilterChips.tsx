@@ -29,17 +29,15 @@ interface ChipsProps {
 
   setIsReset?: Function,
 
-  inner?: boolean,
+  isInnerChips?: boolean,
 
   data?: any,
 
   setChipData: Function,
 
-  chipData?: [],
+  chipsData: any,
 
   chipsParent?: any,
-
-  getChipsParent: Function,
 
 }
 
@@ -80,33 +78,35 @@ const RenderContent = (props: ChipsProps): React.ReactElement => {
 
 
 const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
-  const { isFilter, text, checked, setIsOpenPuller, inner, data, chipsParent, getChipsParent, chipData, setChipData } = props;
+  const { isFilter, text, checked, setIsOpenPuller, isInnerChips, data, setParentChips } = props;
   const [isReset, setIsReset] = React.useState<boolean | undefined>(false);
   const [isSelect, setIsSelect] = React.useState<boolean | undefined>(false);
 
-  const getIdParentChips = (data): any => {
-    setIsOpenPuller(true);
-    getChipsParent({ ...chipsParent, label: data.label });
-
-    return data;
-  };
-
   const handleChangeTitleChips = (): void => {
     setIsReset(true);
-    if (chipsParent !== null && chipsParent !== undefined) {
-      Object.assign(chipsParent, {
-        label: data.label,
-      });
-    }
+    setParentChips(data);
+    // if (chipsParent !== null && chipsParent !== undefined) {
+    //   Object.assign(chipsParent, {
+    //     label: data.label,
+    //   });
+    // }
+    Object.assign(data, {
 
-    // setChipData(chipsParent.label);
+      actions: 'change',
+    });
   };
-  console.log('🚀 ~ file: FilterChips.tsx ~ line 103 ~ data', data);
-  console.log('🚀 ~ file: FilterChips.tsx ~ line 99 ~ chipsParent', chipsParent);
 
-  return isFilter || inner ? (
-    <TouchableOpacity onPress={event => (!inner ? getIdParentChips(data) : handleChangeTitleChips())}>
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 98 ~ handleChangeTitleChips ~ data', data);
 
+  const handlePressParent = () => {
+    setIsOpenPuller(true);
+    Object.assign(data, {
+      actions: 'open',
+    });
+  };
+
+  return isFilter || isInnerChips ? (
+    <TouchableOpacity onPress={event => (!isInnerChips ? handlePressParent() : handleChangeTitleChips())}>
       <View
         style={[
           styles.chipsContainer,
@@ -145,20 +145,46 @@ const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
   );
 };
 
-export const FilterChips = ({ chipData }: {chipData: ChipsProps}): React.ReactElement => (
-  chipData.map((data: any): React.ReactElement => (
-    <View key={data.key}>
-      <FilterChipsItem
-        text={data.label}
-        isFilter={data.isFilter}
-        checked={data.checked}
-        setIsOpenPuller={data.setIsOpenPuller}
-        data={data}
-        chipData={data.chipData}
-        setChipData={data.setChipData}
-        chipsParent={data.chipsParent}
-        getChipsParent={data.getChipsParent}
-        inner
-      />
-    </View>
-  )));
+export const FilterChips = (
+  { chipsData, isInnerChips, setIsOpenPuller }:
+  { chipsData: any, isInnerChips: boolean, setIsOpenPuller: Function },
+): React.ReactElement => {
+  const [chipsParent, getChipsParent] = React.useState();
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 153 ~ chipsParent', chipsParent);
+
+  // const [parentChips, getIdParentChips] = React.useState(chipsData);
+
+  const [parentChips, setParentChips] = React.useState(chipsData);
+
+  const innerChips = chipsData.reduce((chips: any, el: any) => {
+    const _chips = chips;
+    _chips[el.actions] = el.inner;
+    return _chips;
+  });
+
+  const actionsKey = innerChips?.open?.find(key => key.actions === 'change');
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 164 ~ actionsKey', actionsKey);
+
+  const chipsDataFilter = isInnerChips ? innerChips.open : chipsData;
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 164 ~ innerChips.open', innerChips.open);
+  console.log('🚀 ~ file: FilterChips.tsx ~ line 161 ~ chipsData', chipsData);
+
+  return (
+    chipsDataFilter?.map((data: any): React.ReactElement => (
+      <View key={data.key}>
+        <FilterChipsItem
+          text={data.label}
+          isFilter={data.isFilter}
+          checked={data.checked}
+          setIsOpenPuller={setIsOpenPuller}
+          data={data}
+          chipsData={chipsData}
+          // chipsDataFilter={chipsDataFilter}
+          setChipData={data.setChipData}
+          chipsParent={data.chipsParent}
+          isInnerChips={isInnerChips}
+          setParentChips={setParentChips}
+        />
+      </View>
+    )));
+};
