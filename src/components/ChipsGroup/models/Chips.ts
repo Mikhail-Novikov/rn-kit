@@ -18,6 +18,7 @@ export type ChipsProps = {
   setIsOpenPuller: Function,
   isReset?: boolean,
   setIsReset?: Function,
+  getChipsAction: Function,
   isInnerChips?: boolean,
   data?: any,
   chipsData: any[],

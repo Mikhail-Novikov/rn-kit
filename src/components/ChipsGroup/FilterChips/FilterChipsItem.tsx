@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import {
   TouchableOpacity,
@@ -7,10 +6,11 @@ import {
 import { styles } from '../chips.styles';
 import { FilterChipsContent } from './FilterChipsContent';
 import { ChipsProps } from '../models/Chips';
-import { getChipsAction } from './FilterChips';
 
 export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
-  const { isFilter, text, checked, setIsOpenPuller, isInnerChips, data, chipsData } = props;
+  const {
+    isFilter, text, checked, setIsOpenPuller, isInnerChips, data, chipsData, getChipsAction,
+  } = props;
   const [isReset, setIsReset] = React.useState<boolean | undefined>(false);
   const [isSelect, setIsSelect] = React.useState<boolean | undefined>(false);
 
@@ -26,16 +26,17 @@ export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
       .map((acc: any, i: number) => i)
     )?.length;
 
-    chipsData.map((el: { action: string }): void => {
+    chipsData.map((el: { action: string }): React.ReactNode => {
       if (el.action === 'active' && countChipsSelected !== undefined) {
         Object.assign(el, {
           label: `Select ${countChipsSelected} choice`,
         });
       }
+      return null;
     });
   };
 
-  const handleActiveParentChips = () => {
+  const handleActiveParentChips = (): void => {
     setIsOpenPuller(true);
     Object.assign(data, {
       action: 'active',
@@ -43,7 +44,9 @@ export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
   };
 
   return isFilter || isInnerChips ? (
-    <TouchableOpacity onPress={event => (!isInnerChips ? handleActiveParentChips() : handleSelectedInnerChips())}>
+    <TouchableOpacity
+      onPress={event => (!isInnerChips ? handleActiveParentChips() : handleSelectedInnerChips())}
+    >
       <View
         style={[
           styles.chipsContainer,
