@@ -4,8 +4,8 @@ export type ChipsContentProps = {
   isFilter?: boolean,
   isSelect?: boolean,
   setIsSelect?: Function,
-  isReset?: boolean,
-  setIsReset?: Function,
+  isClearBtn?: boolean,
+  setisClearBtn?: Function,
   isInnerChips?: boolean,
 };
 
@@ -16,8 +16,8 @@ export type ChipsProps = {
   isSelect?: boolean,
   setIsSelect?: Function,
   setIsOpenPuller: Function,
-  isReset?: boolean,
-  setIsReset?: Function,
+  isClearBtn?: boolean,
+  setisClearBtn?: Function,
   getChipsAction: Function,
   isInnerChips?: boolean,
   data?: any,

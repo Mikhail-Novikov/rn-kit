@@ -2,19 +2,16 @@ import { StyleSheet } from 'react-native';
 import { theme } from '../../constants/Colors';
 
 export const styles = StyleSheet.create({
-    chipsContainer: {
-      alignSelf: 'flex-start',
-      minHeight: 32,
-      borderRadius: 16,
-      margin: 4,
-      minWidth: 114,
-    },
     chipsWrapper: {
+      borderRadius: 16,
       paddingHorizontal: 16,
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
+      margin: 4,
+      minHeight: 32,
+      minWidth: 114,
     },
     chipsText: {
       color: '#1F1F22',

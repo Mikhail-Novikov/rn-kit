@@ -9,17 +9,22 @@ import { styles } from '../chips.styles';
 import { ChipsContentProps } from '../models/Chips';
 
 
-export const FilterChipsContent = (props: ChipsContentProps): React.ReactElement => {
-  const { text, isFilter, isSelect, setIsSelect, checked, isReset } = props;
+export const FilterChipsView = (props: ChipsContentProps): React.ReactElement => {
+  const { text, isFilter, isSelect, setIsSelect, checked, isClearBtn } = props;
 
   return (
-    <View style={styles.chipsWrapper}>
+    <View
+      style={[
+        styles.chipsWrapper,
+        { backgroundColor: isSelect || checked ? '#1F1F22' : '#E4E8EB' },
+      ]}
+    >
       <Text
         style={[styles.dotText, { color: (isSelect || checked) ? '#FFFFFF' : '#1F1F22' }]}
       >
         {text}
       </Text>
-      {!isReset && isFilter && (
+      {!isClearBtn && isFilter && (
         <View
           style={{
             marginLeft: 8,
@@ -29,7 +34,7 @@ export const FilterChipsContent = (props: ChipsContentProps): React.ReactElement
           <ProdIcon name="caretdown" size={16} color="#7D838A" />
         </View>
       )}
-      {isReset && (
+      {isClearBtn && (
         <TouchableOpacity onPress={() => setIsSelect && setIsSelect(false)}>
           <View
             style={{

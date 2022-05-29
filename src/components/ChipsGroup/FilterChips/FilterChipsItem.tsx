@@ -3,19 +3,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { styles } from '../chips.styles';
-import { FilterChipsContent } from './FilterChipsContent';
+import { FilterChipsView } from './FilterChipsView';
 import { ChipsProps } from '../models/Chips';
 
 export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
   const {
     isFilter, text, checked, setIsOpenPuller, isInnerChips, data, chipsData, getChipsAction,
   } = props;
-  const [isReset, setIsReset] = React.useState<boolean | undefined>(false);
+  const [isClearBtn, setisClearBtn] = React.useState<boolean | undefined>(false);
   const [isSelect, setIsSelect] = React.useState<boolean | undefined>(false);
 
   const handleSelectedInnerChips = (): void => {
-    setIsReset(true);
+    setisClearBtn(true);
 
     Object.assign(data, {
       action: 'selected',
@@ -47,38 +46,24 @@ export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
     <TouchableOpacity
       onPress={event => (!isInnerChips ? handleActiveParentChips() : handleSelectedInnerChips())}
     >
-      <View
-        style={[
-          styles.chipsContainer,
-          { backgroundColor: isSelect || checked ? '#1F1F22' : '#E4E8EB' },
-        ]}
-      >
-        <FilterChipsContent
-          text={text}
-          isFilter={isFilter}
-          isSelect={isSelect}
-          setIsSelect={setIsSelect}
-          checked={checked}
-          isReset={isReset}
-        />
-      </View>
-    </TouchableOpacity>
-  ) : (
-    <View
-      style={[
-        styles.chipsContainer,
-        {
-          backgroundColor: checked ? '#1F1F22' : '#E4E8EB',
-        },
-      ]}
-    >
-      <FilterChipsContent
+      <FilterChipsView
         text={text}
         isFilter={isFilter}
         isSelect={isSelect}
         setIsSelect={setIsSelect}
         checked={checked}
-        isReset={isReset}
+        isClearBtn={isClearBtn}
+      />
+    </TouchableOpacity>
+  ) : (
+    <View>
+      <FilterChipsView
+        text={text}
+        isFilter={isFilter}
+        isSelect={isSelect}
+        setIsSelect={setIsSelect}
+        checked={checked}
+        isClearBtn={isClearBtn}
       />
     </View>
   );
