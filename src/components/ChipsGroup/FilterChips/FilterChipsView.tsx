@@ -10,17 +10,19 @@ import { ChipsContentProps } from '../models/Chips';
 
 
 export const FilterChipsView = (props: ChipsContentProps): React.ReactElement => {
-  const { text, isFilter, isSelect, setIsSelect, checked, isClearBtn } = props;
+  const { text, isFilter, setIsClearBtn, isClearBtn, checked } = props;
 
   return (
     <View
       style={[
         styles.chipsWrapper,
-        { backgroundColor: isSelect || checked ? '#1F1F22' : '#E4E8EB' },
+        { backgroundColor: checked || isClearBtn ? '#1F1F22' : '#E4E8EB' },
       ]}
     >
       <Text
-        style={[styles.dotText, { color: (isSelect || checked) ? '#FFFFFF' : '#1F1F22' }]}
+        style={[
+          styles.dotText,
+          { color: checked || isClearBtn ? '#FFFFFF' : '#1F1F22' }]}
       >
         {text}
       </Text>
@@ -35,7 +37,7 @@ export const FilterChipsView = (props: ChipsContentProps): React.ReactElement =>
         </View>
       )}
       {isClearBtn && (
-        <TouchableOpacity onPress={() => setIsSelect && setIsSelect(false)}>
+        <TouchableOpacity onPress={() => setIsClearBtn && setIsClearBtn(!isClearBtn)}>
           <View
             style={{
               marginLeft: 4,

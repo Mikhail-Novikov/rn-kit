@@ -10,11 +10,11 @@ export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
   const {
     isFilter, text, checked, setIsOpenPuller, isInnerChips, data, chipsData, getChipsAction,
   } = props;
-  const [isClearBtn, setisClearBtn] = React.useState<boolean | undefined>(false);
+  const [isClearBtn, setIsClearBtn] = React.useState<boolean | undefined>(false);
   const [isSelect, setIsSelect] = React.useState<boolean | undefined>(false);
 
   const handleSelectedInnerChips = (): void => {
-    setisClearBtn(true);
+    setIsClearBtn(true);
 
     Object.assign(data, {
       action: 'selected',
@@ -40,7 +40,19 @@ export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
     Object.assign(data, {
       action: 'active',
     });
+    setChipsSelected();
   };
+
+  const setChipsSelected = (): void => {
+    getChipsAction(chipsData)
+    .active?.filter((el: { action: string }) => el.action === 'selected')
+    .map((el: any, i: number) => {
+      console.log('🚀 ~ file: FilterChipsItem.tsx ~ line 43 ~ handleSelectedInnerChips ~ el', el);
+    });
+  };
+
+  console.log('🚀 ~ file: FilterChipsItem.tsx ~ line 45 ~ chipsData', chipsData);
+  console.log('🚀 ~ file: FilterChipsItem.tsx ~ line 46 ~ data', data);
 
   return isFilter || isInnerChips ? (
     <TouchableOpacity
@@ -49,10 +61,9 @@ export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
       <FilterChipsView
         text={text}
         isFilter={isFilter}
-        isSelect={isSelect}
-        setIsSelect={setIsSelect}
         checked={checked}
         isClearBtn={isClearBtn}
+        setIsClearBtn={setIsClearBtn}
       />
     </TouchableOpacity>
   ) : (
@@ -60,10 +71,9 @@ export const FilterChipsItem = (props: ChipsProps): React.ReactElement => {
       <FilterChipsView
         text={text}
         isFilter={isFilter}
-        isSelect={isSelect}
-        setIsSelect={setIsSelect}
         checked={checked}
         isClearBtn={isClearBtn}
+        setIsClearBtn={setIsClearBtn}
       />
     </View>
   );
