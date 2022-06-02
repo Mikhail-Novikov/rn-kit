@@ -2,9 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { FilterChipsItem } from './FilterChipsItem';
 
+
 export const FilterChips = (
-  { data, isInnerChips, setIsOpenPuller }:
-  { data: any, isInnerChips: boolean, setIsOpenPuller: Function },
+  { data, isInnerChips, setIsOpenPuller, isOpenPuller }:
+  { data: any, isInnerChips: boolean, setIsOpenPuller: Function , isOpenPuller: boolean},
 ): React.ReactElement => {
 
   const getChipsAction = (chipsData: any[]) => chipsData.reduce((chips: any, el: any): [] => {
@@ -14,8 +15,10 @@ export const FilterChips = (
   });
 
   const chipsData = data;
-  const chipsDataFilter = isInnerChips ? getChipsAction(chipsData).active : chipsData;
-
+  // const chipsDataFilter = isInnerChips ? getChipsAction(chipsData).active : chipsData;
+  const chipsDataFilter = isInnerChips ? chipsData.inner : chipsData;
+  console.log("🚀 ~ file: index.tsx ~ line 20 ~ chipsData", chipsData)
+  
   return (
     chipsDataFilter?.map((data: any): React.ReactElement => (
       <View key={data.key}>
@@ -24,11 +27,13 @@ export const FilterChips = (
           isFilter={data.isFilter}
           checked={data.checked}
           setIsOpenPuller={setIsOpenPuller}
+          isOpenPuller={isOpenPuller}
           data={data}
           chipsData={chipsData}
           chipsParent={data.chipsParent}
           isInnerChips={isInnerChips}
-          getChipsAction={getChipsAction} 
+          getChipsAction={getChipsAction}
+          // setInnerChips={setInnerChips}
         />
       </View>
     )));

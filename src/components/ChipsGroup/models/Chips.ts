@@ -23,4 +23,7 @@ export type ChipsProps = {
   data?: any,
   chipsData: any[],
   chipsParent?: any,
+  setInnerChips: Function,
+  dispatch: any,
+  isOpenPuller?: boolean,
 };

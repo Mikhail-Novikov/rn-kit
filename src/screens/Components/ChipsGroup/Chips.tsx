@@ -14,19 +14,29 @@ interface ChipData {
 }
 
 const chips = [
-  { key: 0, label: 'Chips name 1', checked: true },
-  { key: 1, label: 'Chips name 2' },
-  { key: 2,
+  { key: 1, label: 'Chips name 1', checked: true },
+  { key: 2, label: 'Chips name 2' },
+  { key: 3,
     label: 'Chips name 3',
     isFilter: true,
     checked: true,
     inner: [
-      { key: 5, label: 'Chips name 6' },
-      { key: 6, label: 'Chips name 7' },
+      { key: 6, label: 'Chips name 6' },
+      { key: 7, label: 'Chips name 7' },
+      { key: 8, label: 'Chips name 8' },
     ],
   },
-  { key: 3, label: 'Chips name 4' },
-  { key: 4, label: 'Chips name 5' },
+  { key: 4,
+    label: 'Chips name 4',
+    isFilter: true,
+    checked: true,
+    inner: [
+      { key: 9, label: 'Chips name 9' },
+      { key: 10, label: 'Chips name 10' },
+    ],
+  },
+  { key: 5, label: 'Chips name 5' },
+  { key: 6, label: 'Chips name 6' },
 ];
 
 export const ChipsGroup = (): React.ReactElement | null => {
