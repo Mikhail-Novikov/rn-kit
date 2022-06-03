@@ -8,6 +8,8 @@ export const FilterChips = (
   { data: any, isInnerChips: boolean, setIsOpenPuller: Function , isOpenPuller: boolean},
 ): React.ReactElement => {
 
+  const [counter, setIsCounter] = React.useState<number>();
+
   const getChipsAction = (chipsData: any[]) => chipsData.reduce((chips: any, el: any): [] => {
     const _chips = chips;
     _chips[el.action] = el.inner;
@@ -28,12 +30,14 @@ export const FilterChips = (
           checked={data.checked}
           setIsOpenPuller={setIsOpenPuller}
           isOpenPuller={isOpenPuller}
-          data={data}
+          itemChip={data}
           chipsData={chipsData}
           chipsParent={data.chipsParent}
           isInnerChips={isInnerChips}
           getChipsAction={getChipsAction}
           // setInnerChips={setInnerChips}
+          counter={counter}
+          setIsCounter={setIsCounter}
         />
       </View>
     )));
